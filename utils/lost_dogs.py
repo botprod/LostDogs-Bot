@@ -51,11 +51,11 @@ class LostDogs:
     async def stats(self):
         await self.login()
 
-        r = await (await self.session.get('https://api.getgems.io/graphql?operationName=getHomePage&variables=%7B%7D&extensions=%7B%22persistedQuery%22%3A%7B%22version%22%3A1%2C%22sha256Hash%22%3A%22d89d3ccd8d9fd69d37d181e2e8303ee78b80e6a26e4500c42e6d9f695257f9be%22%7D%7D')).json()
+        r = await (await self.session.get('https://api.getgems.io/graphql?operationName=getHomePage&variables=%7B%7D&extensions=%7B%22persistedQuery%22%3A%7B%22version%22%3A1%2C%22sha256Hash%22%3A%22d89d3ccd8d9fd69d37d181e2e8303ee78b80e6a26e4500c42e6d9f695257f9be%22%7D%7D', ssl=False)).json()
         bones = r.get('data').get('lostDogsWayUserInfo').get('gameDogsBalance')
         woof = str(self.from_nano(int(r.get('data').get('lostDogsWayUserInfo').get('woofBalance'))))
 
-        r = await (await self.session.get('https://api.getgems.io/graphql?operationName=lostDogsWayUserReferralInfo&variables=%7B%7D&extensions=%7B%22persistedQuery%22%3A%7B%22version%22%3A1%2C%22sha256Hash%22%3A%22b8715a45063000b04aceb73f791b95dfbecf3f85e5399b34c02a0d544bb84008%22%7D%7D')).json()
+        r = await (await self.session.get('https://api.getgems.io/graphql?operationName=lostDogsWayUserReferralInfo&variables=%7B%7D&extensions=%7B%22persistedQuery%22%3A%7B%22version%22%3A1%2C%22sha256Hash%22%3A%22b8715a45063000b04aceb73f791b95dfbecf3f85e5399b34c02a0d544bb84008%22%7D%7D', ssl=False)).json()
         referral_link = r.get('data').get('lostDogsWayUserReferralInfo').get('referralLink')
         referrals = r.get('data').get('lostDogsWayUserReferralInfo').get('invitedPeopleCount')
 
@@ -72,11 +72,11 @@ class LostDogs:
 
     async def complete_task(self, task_id: str):
         json_data = {"operationName": "lostDogsWayCompleteCommonTask", "variables": {"id": task_id}, "extensions": {"persistedQuery": {"version": 1, "sha256Hash": "313971cc7ece72b8e8edce3aa0bc72f6e40ef1c242250804d72b51da20a8626d"}}}
-        r = await (await self.session.post('https://api.getgems.io/graphql', json=json_data)).json()
+        r = await (await self.session.post('https://api.getgems.io/graphql', json=json_data, ssl=False)).json()
         return r.get('data').get('lostDogsWayCompleteCommonTask').get('success')
 
     async def get_tasks(self):
-        r = await (await self.session.get('https://api.getgems.io/graphql?operationName=getDogsPage&variables=%7B%22withCommonTasks%22%3Atrue%7D&extensions=%7B%22persistedQuery%22%3A%7B%22version%22%3A1%2C%22sha256Hash%22%3A%22a23b386ba13302517841d83364cd25ea6fcbf07e1a34a40a5314da8cfd1c6565%22%7D%7D')).json()
+        r = await (await self.session.get('https://api.getgems.io/graphql?operationName=getDogsPage&variables=%7B%22withCommonTasks%22%3Atrue%7D&extensions=%7B%22persistedQuery%22%3A%7B%22version%22%3A1%2C%22sha256Hash%22%3A%22a23b386ba13302517841d83364cd25ea6fcbf07e1a34a40a5314da8cfd1c6565%22%7D%7D', ssl=False)).json()
 
         task_list = r.get('data').get('lostDogsWayCommonTasks').get('items')
         done_tasks = r.get('data').get('lostDogsWayUserCommonTasksDone')
@@ -86,17 +86,17 @@ class LostDogs:
         return tasks
 
     async def get_round_end(self):
-        r = await (await self.session.get('https://api.getgems.io/graphql?operationName=getHomePage&variables=%7B%7D&extensions=%7B%22persistedQuery%22%3A%7B%22version%22%3A1%2C%22sha256Hash%22%3A%22d89d3ccd8d9fd69d37d181e2e8303ee78b80e6a26e4500c42e6d9f695257f9be%22%7D%7D')).json()
+        r = await (await self.session.get('https://api.getgems.io/graphql?operationName=getHomePage&variables=%7B%7D&extensions=%7B%22persistedQuery%22%3A%7B%22version%22%3A1%2C%22sha256Hash%22%3A%22d89d3ccd8d9fd69d37d181e2e8303ee78b80e6a26e4500c42e6d9f695257f9be%22%7D%7D', ssl=False)).json()
         round_ends_at = r.get('data').get('lostDogsWayGameStatus').get('gameState').get('roundEndsAt')
         return round_ends_at
 
     async def current_round_vote(self):
-        r = await (await self.session.get('https://api.getgems.io/graphql?operationName=getHomePage&variables=%7B%7D&extensions=%7B%22persistedQuery%22%3A%7B%22version%22%3A1%2C%22sha256Hash%22%3A%22d89d3ccd8d9fd69d37d181e2e8303ee78b80e6a26e4500c42e6d9f695257f9be%22%7D%7D')).json()
+        r = await (await self.session.get('https://api.getgems.io/graphql?operationName=getHomePage&variables=%7B%7D&extensions=%7B%22persistedQuery%22%3A%7B%22version%22%3A1%2C%22sha256Hash%22%3A%22d89d3ccd8d9fd69d37d181e2e8303ee78b80e6a26e4500c42e6d9f695257f9be%22%7D%7D', ssl=False)).json()
         current_round = r.get('data').get('lostDogsWayUserInfo').get('currentRoundVote')
         return current_round
 
     async def get_previous_round_vote(self):
-        r = await (await self.session.get('https://api.getgems.io/graphql?operationName=getHomePage&variables=%7B%7D&extensions=%7B%22persistedQuery%22%3A%7B%22version%22%3A1%2C%22sha256Hash%22%3A%22d89d3ccd8d9fd69d37d181e2e8303ee78b80e6a26e4500c42e6d9f695257f9be%22%7D%7D')).json()
+        r = await (await self.session.get('https://api.getgems.io/graphql?operationName=getHomePage&variables=%7B%7D&extensions=%7B%22persistedQuery%22%3A%7B%22version%22%3A1%2C%22sha256Hash%22%3A%22d89d3ccd8d9fd69d37d181e2e8303ee78b80e6a26e4500c42e6d9f695257f9be%22%7D%7D', ssl=False)).json()
         round_vote = r.get('data').get('lostDogsWayUserInfo').get('prevRoundVote')
         if round_vote is None:
             return None, None, None
@@ -108,12 +108,12 @@ class LostDogs:
 
     async def vote(self, card: int):
         json_data = {"operationName": "lostDogsWayVote", "variables": {"value": str(card)}, "extensions": {"persistedQuery": {"version": 1, "sha256Hash": "6fc1d24c3d91a69ebf7467ebbed43c8837f3d0057a624cdb371786477c12dc2f"}}}
-        r = await (await self.session.post('https://api.getgems.io/graphql', json=json_data)).json()
+        r = await (await self.session.post('https://api.getgems.io/graphql', json=json_data, ssl=False)).json()
         return 'lostDogsWayGenerateWallet' in str(r.get('data'))
 
     async def register(self):
         json_data = {"operationName": "lostDogsWayGenerateWallet", "variables": {}, "extensions": {"persistedQuery": {"version": 1, "sha256Hash": "d78ea322cda129ec3958fe21013f35ab630830479ea9510549963956127a44dd"}}}
-        r = await (await self.session.post('https://api.getgems.io/graphql', json=json_data)).json()
+        r = await (await self.session.post('https://api.getgems.io/graphql', json=json_data, ssl=False)).json()
         return 'lostDogsWayGenerateWallet' in str(r.get('data'))
 
     async def logout(self):
@@ -131,7 +131,7 @@ class LostDogs:
         self.session.headers['X-Auth-Token'] = query
         self.session.headers['X-Gg-Client'] = 'v:1 l:ru'
 
-        r = await (await self.session.get('https://api.getgems.io/graphql?operationName=getHomePage&variables=%7B%7D&extensions=%7B%22persistedQuery%22%3A%7B%22version%22%3A1%2C%22sha256Hash%22%3A%22d89d3ccd8d9fd69d37d181e2e8303ee78b80e6a26e4500c42e6d9f695257f9be%22%7D%7D')).json()
+        r = await (await self.session.get('https://api.getgems.io/graphql?operationName=getHomePage&variables=%7B%7D&extensions=%7B%22persistedQuery%22%3A%7B%22version%22%3A1%2C%22sha256Hash%22%3A%22d89d3ccd8d9fd69d37d181e2e8303ee78b80e6a26e4500c42e6d9f695257f9be%22%7D%7D', ssl=False)).json()
         if r.get('errors') is not None:
             if await self.register():
                 logger.success(f"Thread {self.thread} | {self.account} | Register")
