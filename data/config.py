@@ -7,7 +7,7 @@ DELAYS = {
     'TASK':  [5, 10],  # delay after complete task
     "SLEEP": [100, 500]  # additional delay before claim reward
 }
-
+REF_LINK = 'ref-u_918432365__s_573809'
 BLACKLIST_TASK = ['Подключи кошелек с $NOT']
 
 PROXY = {
@@ -31,5 +31,4 @@ Soft for https://t.me/lost_dogs_bot
 claim reward; claim daily reward; complete tasks
 
 The soft also collects statistics on accounts and uses proxies from {f"the {PROXY['PROXY_PATH']} file" if PROXY['USE_PROXY_FROM_FILE'] else "the accounts.json file"}
-To buy this soft with the option to set your referral link write me: https://t.me/Axcent_ape
 """
